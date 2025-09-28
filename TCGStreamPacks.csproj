@@ -21,6 +21,7 @@
     <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
     <PackageReference Include="TCGGameLibs" Version="0.61.4" />
     <PackageReference Include="UnityEngine.Modules" Version="2021.3.38.8007589" IncludeAssets="compile" />
+    <PackageReference Include="Websocket.Client" Version="5.3.0" />
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
