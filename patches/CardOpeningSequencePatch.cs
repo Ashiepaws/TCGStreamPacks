@@ -13,7 +13,11 @@ public class CardOpeningSequencePatch
         if(!string.IsNullOrEmpty(username))
         {
             foreach (var card in ___m_RolledCardDataList)
-                _ = LeaderboardAPI.SubmitCard(username, card);
+                LeaderboardAPI.SubmitCard(username, card).ContinueWith(task =>
+                {
+                    if (task.Exception != null)
+                        Plugin.Logger.LogError("Failed to submit card to leaderboard: " + task.Exception);
+                });
         }
     }
 }

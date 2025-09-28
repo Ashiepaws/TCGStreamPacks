@@ -1,19 +1,17 @@
-using System;
 using System.Threading.Tasks;
-using Websocket.Client;
 
 namespace TCGStreamPacks.Twitch;
 
 public class TwitchEventManager
 {
     private readonly TwitchWebsocket twitchWS;
-    private readonly TwitchToken twitchToken;
+    public readonly TwitchToken TwitchToken;
 
     public string BroadcasterId { get; private set; }
 
     private TwitchEventManager(TwitchToken token)
     {
-        twitchToken = token;
+        TwitchToken = token;
         twitchWS = new TwitchWebsocket(this);
         twitchWS.Start();
     }
@@ -26,7 +24,7 @@ public class TwitchEventManager
 
     private async void RegisterEventSub()
     {
-        BroadcasterId = await TwitchAPI.GetUserId(twitchToken);
+        BroadcasterId = await TwitchAPI.GetUserId(TwitchToken);
         Plugin.Logger.LogDebug($"Registering EventSub for broadcaster ID: {BroadcasterId}");
         var registerBody = new
         {
@@ -42,7 +40,7 @@ public class TwitchEventManager
                 session_id = twitchWS.SessionID
             }
         };
-        var response = await TwitchAPI.RegisterEventSub(twitchToken, registerBody);
+        var response = await TwitchAPI.RegisterEventSub(TwitchToken, registerBody);
         response.EnsureSuccessStatusCode();
         Plugin.Logger.LogDebug("Twitch EventSub subscription registered successfully.");
     }

@@ -23,6 +23,7 @@ public class Plugin : BaseUnityPlugin
     private static ConfigEntry<string> _TwitchEventSubUrl;
     private static ConfigEntry<string> _LeaderboardApiUrl;
     private static ConfigEntry<bool> _OpenBrowserOnAuth;
+    private static ConfigEntry<bool> _IgnoreSSL;
 
     public static string TwitchClientID => _TwitchClientId.Value;
     public static string TwitchTokenScopes => _TwitchTokenScopes.Value;
@@ -30,6 +31,7 @@ public class Plugin : BaseUnityPlugin
     public static string TwitchEventSubUrl => _TwitchEventSubUrl.Value;
     public static string LeaderboardApiUrl => _LeaderboardApiUrl.Value;
     public static bool OpenBrowserOnAuth => _OpenBrowserOnAuth.Value;
+    public static bool IgnoreSSL => _IgnoreSSL.Value;
 
     public static ECollectionPackType GetPackTypeForRewardName(string rewardName)
     {
@@ -100,5 +102,6 @@ public class Plugin : BaseUnityPlugin
 
         // Other configs
         _OpenBrowserOnAuth = Config.Bind("Twitch Connection", "Open Browser On Auth", true, "If true, the browser will be opened automatically when authentication is required. If false, you will need to open the URL manually.");
+        _IgnoreSSL = Config.Bind("Twitch Connection", "Ignore SSL Errors", false, "If true, SSL certificate errors will be ignored when connecting to Twitch and the Leaderboard API. This is insecure and should only be used for debugging.");
     }
 }
