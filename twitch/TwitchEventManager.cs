@@ -9,6 +9,8 @@ public class TwitchEventManager
     private readonly TwitchWebsocket twitchWS;
     private readonly TwitchToken twitchToken;
 
+    public string BroadcasterId { get; private set; }
+
     private TwitchEventManager(TwitchToken token)
     {
         twitchToken = token;
@@ -24,15 +26,15 @@ public class TwitchEventManager
 
     private async void RegisterEventSub()
     {
-        string broadcasterId = await TwitchAPI.GetUserId(twitchToken);
-        Plugin.Logger.LogDebug($"Registering EventSub for broadcaster ID: {broadcasterId}");
+        BroadcasterId = await TwitchAPI.GetUserId(twitchToken);
+        Plugin.Logger.LogDebug($"Registering EventSub for broadcaster ID: {BroadcasterId}");
         var registerBody = new
         {
             type = "channel.channel_points_custom_reward_redemption.add",
             version = "1",
             condition = new
             {
-                broadcaster_user_id = broadcasterId
+                broadcaster_user_id = BroadcasterId
             },
             transport = new
             {
